@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invitación</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #e6dfd4;
+  overflow: hidden;
+}
+
+/* CONTENEDOR */
+.container {
+  width: 90%;
+  max-width: 360px;
+  aspect-ratio: 3 / 4;
+  position: relative;
+}
+
+/* SOBRE */
+.envelope {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+/* CUERPO DEL SOBRE (FONDO CENTRAL) */
+.base {
+  position: absolute;
+  inset: 0;
+  background: url("sobre.png") center/cover no-repeat;
+  border-radius: 10px;
+  box-shadow: 0 18px 35px rgba(0,0,0,0.25);
+  z-index: 1;
+}
+
+/* MITADES DEL SOBRE */
+.flap-left, .flap-right {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  background: url("sobre.png") center/cover no-repeat;
+  z-index: 3;
+  transition: transform 2s ease;
+}
+
+.flap-left {
+  left: 0;
+  background-position: left center;
+  border-radius: 10px 0 0 10px;
+  box-shadow: inset -2px 0 6px rgba(0,0,0,0.1);
+}
+
+.flap-right {
+  right: 0;
+  background-position: right center;
+  border-radius: 0 10px 10px 0;
+  box-shadow: inset 2px 0 6px rgba(0,0,0,0.1);
+}
+
+/* INVITACIÓN */
+.card {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  background: url("invitacion.png") center/cover no-repeat;
+  border-radius: 10px;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 1.5s ease, transform 1.5s ease;
+  z-index: 2;
+}
+
+/* SELLO */
+.seal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 84px;
+  height: 84px;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+}
+
+.seal::before,
+.seal::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("sello.png") center/cover no-repeat;
+  transition: transform 1.2s ease, opacity 0.8s ease;
+}
+
+.seal::before { clip-path: inset(0 50% 0 0); }
+.seal::after  { clip-path: inset(0 0 0 50%); }
+
+/* ESTADO ABIERTO */
+.open .flap-left {
+  transform: translateX(-110%);
+}
+
+.open .flap-right {
+  transform: translateX(110%);
+}
+
+.open .card {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.open .seal::before {
+  transform: translateX(-40px) rotate(-18deg);
+  opacity: 0;
+}
+
+.open .seal::after {
+  transform: translateX(40px) rotate(18deg);
+  opacity: 0;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="envelope" onclick="openEnvelope()">
+
+    <div class="base"></div>
+
+    <div class="flap-left"></div>
+    <div class="flap-right"></div>
+
+    <div class="card"></div>
+
+    <div class="seal"></div>
+
+    <audio id="paperSound" src="paper.mp3" preload="auto"></audio>
+
+  </div>
+</div>
+
+<script>
+function openEnvelope() {
+  const env = document.querySelector('.envelope');
+  const sound = document.getElementById('paperSound');
+
+  if (env.classList.contains('open')) return;
+
+  env.classList.add('open');
+  sound.play();
+
+  // Redirección después de mostrar la invitación
+  setTimeout(() => {
+    window.location.href = "https://boda-selsol-y-adrtul.my.canva.site/selene-adrian";
+  }, 3500);
+}
+</script>
+
+</body>
+</html>
